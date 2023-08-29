@@ -30,3 +30,8 @@ go mod tidy
 cd test
 go test -v -timeout 30m
 ```
+
+## Test descriptions
+
+### [](./test/terraform_basic_example_test.go) 
+This test does not use any external providers, so the test just applies the plan and asserts against the outputs.

@@ -6,7 +6,7 @@ Such tests actually deploy a terraform module and then verify the result. For ex
 
 ## Prerequisites
 
-We need terraform installed and on the path.
+Make sure [terraform](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform) is installed and available on the path.
 
 ## Terratest
 

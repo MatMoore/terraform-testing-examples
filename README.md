@@ -80,6 +80,8 @@ There are different ways to assert against things in the test:
 
 These tests are written in python and pytest.
 
+Compared to terratest, this tool is more basic/simple. There is no functionality for directly interacting with an AWS stack, the library just manages running the terraform for you.
+
 ### Prerequisites
 
 You will need some recent version of python.
@@ -99,3 +101,46 @@ pytest
 
 #### [terraform_basic_example_test](./tftest/test_terraform_basic_example.py) 
 This test does not use any external providers, so the test just applies the plan and asserts against the outputs.
+
+### Writing new tests
+You can test just the planning stage like so
+
+```python
+
+@pytest.fixture
+def plan(fixtures_dir):
+  tf = tftest.TerraformTest('plan', fixtures_dir)
+  tf.setup(extra_files=['plan.auto.tfvars'])
+  return tf.plan(output=True)
+
+
+def test_variables(plan):
+  assert 'prefix' in plan.variables
+  assert plan.variables['names'] == ['one', 'two']
+```
+
+And apply like so:
+
+```python
+@pytest.fixture
+def output(fixtures_dir):
+  tf = tftest.TerraformTest('apply', fixtures_dir)
+  tf.setup()
+  tf.apply()
+  yield tf.output()
+  tf.destroy(**{"auto_approve": True})
+
+
+def test_apply(output):
+  value = output['triggers']
+  assert len(value) == 2
+  assert list(value[0].keys()) == ['name', 'template']
+  assert value[0]['name'] == 'one'
+```
+
+Things we can do in the test:
+
+- Directly assert that module outputs (e.g. domains, IPs) match expected values
+- Retrieve an IP/Domain and issue an HTTP request (e.g. via `requests`)
+
+If you want to inspect resource configuration, you'll need to import a seperate library like [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html).

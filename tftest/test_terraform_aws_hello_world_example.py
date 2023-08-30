@@ -16,5 +16,6 @@ def output(fixtures_dir):
 
 def test_outputs(output):
   public_ip = output['public_ip']
-  response = requests.get(f"http://{public_ip}")
+  response = requests.get(f"http://{public_ip}:8080")
   assert response.status_code == 200
+  assert response.text == "Hello, World!"

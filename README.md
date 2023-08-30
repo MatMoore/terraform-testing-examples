@@ -29,7 +29,7 @@ go mod tidy
 ### Run tests
 
 ```
-cd test
+cd terratest
 go test -v -timeout 30m
 ```
 
@@ -37,10 +37,10 @@ Warning: If the test times out, the terraform destroy will not run, and you will
 
 ### Test descriptions
 
-#### [terraform_basic_example_test](./test/terraform_basic_example_test.go) 
+#### [terraform_basic_example_test](./terratest/terraform_basic_example_test.go) 
 This test does not use any external providers, so the test just applies the plan and asserts against the outputs.
 
-#### [terraform_aws_hello_world_example_test](./test/terraform_aws_hello_world_example_test.go) 
+#### [terraform_aws_hello_world_example_test](./terratest/terraform_aws_hello_world_example_test.go) 
 This test deploys a resource to AWS.
 
 [You will need credentials configured to run the test.](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
@@ -74,4 +74,28 @@ There are different ways to assert against things in the test:
 
 - Directly assert that module outputs (e.g. domains, IPs) match expected values
 - Retrieve IDs of AWS resources and interract with them via the [aws subpackage](https://pkg.go.dev/github.com/gruntwork-io/terratest@v0.43.13/modules/aws) ([example 1](https://github.com/gruntwork-io/terratest/blob/v0.43.13/test/terraform_aws_rds_example_test.go) [example 2](https://github.com/gruntwork-io/terratest/blob/v0.43.13/test/terraform_aws_s3_example_test.go)) (only possible for some services)
-- Retrieve an IP/Domain and issue an HTTP request, as in [terraform_aws_hello_world_example_test](./test/terraform_aws_hello_world_example_test.go) 
+- Retrieve an IP/Domain and issue an HTTP request, as in [terraform_aws_hello_world_example_test](./test/terraform_aws_hello_world_example_test.go)
+
+## Testing with Python Test Helper for Terraform (tftest)
+
+These tests are written in python and pytest.
+
+### Prerequisites
+
+You will need some recent version of python.
+
+```
+cd tftest
+python3 -m pip install requirements.txt
+```
+
+### Run tests
+
+```
+pytest
+```
+
+### Test descriptions
+
+#### [terraform_basic_example_test](./tftest/test_terraform_basic_example.py) 
+This test does not use any external providers, so the test just applies the plan and asserts against the outputs.

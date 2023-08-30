@@ -4,6 +4,8 @@ Examples of "unit" testing terraform deployments.
 
 Such tests actually deploy a terraform module and then verify the result. For example, you can verify that a service returns a 200 response.
 
+The goal of this repo is to evaluate some of the tools for unit testing infrastructure. See also [adopting_terraform_testing.md](./adopting_terraform_testing.md) for a checklist for actually adopting one of these tools into an existing delivery pipeline.
+
 ## Prerequisites
 
 Make sure [terraform](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform) is installed and available on the path.

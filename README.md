@@ -21,7 +21,7 @@ These tests are written in Go. It can test terraform in addition to other things
 Configure dependencies:
 
 ```
-cd test
+cd terratest
 go mod init "github.com/MatMoore/terraform-testing-examples"
 go mod tidy
 ```
@@ -29,7 +29,6 @@ go mod tidy
 ### Run tests
 
 ```
-cd terratest
 go test -v -timeout 30m
 ```
 
